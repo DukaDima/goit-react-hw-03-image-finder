@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+// import { ToastContainer } from 'react-toastify';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Searchbar from './components/Searchbar/Searchbar';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
+import Loader from './components/Loader/Loader';
+import Button from './components/Button/Button';
+import Modal from './components/Modal/Modal';
+
+export default class App extends Component {
+  state = {
+    photos: null,
+    showModal: false,
+  };
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+  componentDidMount() {
+    fetch(
+      'https://pixabay.com/api/?q=forest&page=1&key=22333452-088c943be01bb3bdea991b2c2&image_type=photo&orientation=horizontal&per_page=12',
+    )
+      .then(res => res.json())
+      .then(photos => this.setState({ photos }));
+  }
+
+  render() {
+    const { photos, showModal } = this.state;
+    return (
+      <>
+        {showModal && <Modal onClose={this.toggleModal}></Modal>}
+        <Searchbar />
+        <ImageGallery />
+        <ImageGalleryItem />
+        <Button />
+        <Loader />
+        {photos && <div>тут будут фотки</div>};
+      </>
+    );
+  }
 }
-
-export default App;
