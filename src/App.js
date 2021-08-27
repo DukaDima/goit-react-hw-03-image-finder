@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-// import { ToastContainer } from 'react-toastify';
-
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
 import Loader from './components/Loader/Loader';
 import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
+// import { ToastContainer } from 'react-toastify';
 
 export default class App extends Component {
   state = {
     photos: null,
+    searchPhoto: '',
     showModal: false,
   };
+  handleFormSubmit = searchPhoto => {
+    this.setState({ searchPhoto });
+    console.log(searchPhoto);
+  };
+
   toggleModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
@@ -31,12 +36,13 @@ export default class App extends Component {
     return (
       <>
         {showModal && <Modal onClose={this.toggleModal}></Modal>}
-        <Searchbar />
+        {/* <ToastContainer autoClose={3000} /> */}
+        <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery />
         <ImageGalleryItem />
         <Button />
         <Loader />
-        {photos && <div>тут будут фотки</div>};
+        {photos && <div>тут будут фотки</div>}
       </>
     );
   }
