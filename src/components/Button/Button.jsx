@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../components/styles.css';
+window.scrollTo({
+  top: document.documentElement.scrollHeight,
+  behavior: 'smooth',
+});
 
-export default class Button extends Component {
-  render() {
-    return (
-      <>
-        <button type="button">Load more</button>
-      </>
-    );
-  }
-}
+const Button = ({ onClick }) => {
+  return (
+    <>
+      <button type="button" onClick={onClick}>
+        Load more
+      </button>
+    </>
+  );
+};
+
+export default Button;
