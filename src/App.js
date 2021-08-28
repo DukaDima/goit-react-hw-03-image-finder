@@ -8,8 +8,8 @@ import Modal from './components/Modal/Modal';
 export default class App extends Component {
   state = {
     searchPhoto: '',
-
     showModal: false,
+    modalPhoto: '',
   };
   handleFormSubmit = searchPhoto => {
     this.setState({ searchPhoto });
@@ -21,24 +21,28 @@ export default class App extends Component {
       showModal: !showModal,
     }));
   };
-  // componentDidMount() {
-  //   fetch(
-  //     'https://pixabay.com/api/?q=forest&page=1&key=22333452-088c943be01bb3bdea991b2c2&image_type=photo&orientation=horizontal&per_page=12',
-  //   )
-  //     .then(res => res.json())
-  //     .then(photos => this.setState({ photos }));
-  // }
+  handleClickPhoto = modalPhoto => {
+    this.setState({ modalPhoto, showModal: true });
+
+    console.log(this.state.modalPhoto);
+  };
 
   render() {
     const { searchPhoto, showModal } = this.state;
     return (
       <>
-        {showModal && <Modal onClose={this.toggleModal}></Modal>}
+        {showModal && (
+          <Modal
+            onClose={this.toggleModal}
+            largePhoto={this.state.modalPhoto}
+          ></Modal>
+        )}
         {/* <ToastContainer autoClose={3000} /> */}
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery searchPhoto={searchPhoto} />
-
-        {/* {photos && <div>тут будут фотки</div>} */}
+        <ImageGallery
+          searchPhoto={searchPhoto}
+          onClick={this.handleClickPhoto}
+        />
       </>
     );
   }

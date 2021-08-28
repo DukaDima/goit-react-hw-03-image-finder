@@ -47,7 +47,9 @@ export default class ImageGallery extends Component {
       };
     });
   };
-
+  handleModalPhoto = modalPhoto => {
+    this.props.onClick(modalPhoto);
+  };
   render() {
     const { photos, loading, error } = this.state;
     return (
@@ -58,7 +60,11 @@ export default class ImageGallery extends Component {
         {photos && (
           <ul className="ImageGallery">
             {photos.map(hit => (
-              <li className="ImageGalleryItem" key={hit.id}>
+              <li
+                className="ImageGalleryItem"
+                key={hit.id}
+                onClick={() => this.handleModalPhoto(hit.largeImageURL)}
+              >
                 <ImageGalleryItem src={hit.webformatURL} />
               </li>
             ))}

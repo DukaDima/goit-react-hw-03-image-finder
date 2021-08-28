@@ -24,8 +24,8 @@ export default class Modal extends Component {
     return createPortal(
       <div className="Overlay">
         <div className="Modal">
-          {/* <img src="" alt="" /> */}
-          {this.props.children}
+          <img src={this.props.largePhoto} alt="" />
+          {/* {this.props.children} */}
         </div>
       </div>,
       modalRoot,
