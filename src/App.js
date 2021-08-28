@@ -3,6 +3,8 @@ import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 // import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
+import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
+
 // import { ToastContainer } from 'react-toastify';
 
 export default class App extends Component {
@@ -35,7 +37,7 @@ export default class App extends Component {
           <Modal
             onClose={this.toggleModal}
             largePhoto={this.state.modalPhoto}
-          ></Modal>
+          />
         )}
         {/* <ToastContainer autoClose={3000} /> */}
         <Searchbar onSubmit={this.handleFormSubmit} />
