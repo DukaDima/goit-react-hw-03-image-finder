@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 // import { toast } from 'react-toastify';
 import '../../components/styles.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
+  static propTypes = {
+    searchPhoto: PropTypes.string,
+  };
   state = {
     searchPhoto: '',
   };
@@ -12,7 +18,7 @@ export default class Searchbar extends Component {
   handlePhotoSubmit = event => {
     event.preventDefault();
     if (this.state.searchPhoto.trim() === '') {
-      alert('ВВЕДИТЕ КЛЮЧЕВОЕ СЛОВО ПОИСКА');
+      toast.error('ВВЕДИТЕ КЛЮЧЕВОЕ СЛОВО ПОИСКА');
       return;
     }
     this.props.onSubmit(this.state.searchPhoto);

@@ -1,18 +1,18 @@
 import React from 'react';
 import '../../components/styles.css';
-window.scrollTo({
-  top: document.documentElement.scrollHeight,
-  behavior: 'smooth',
-});
+import PropTypes from 'prop-types';
 
 const Button = ({ onClick }) => {
   return (
-    <>
-      <button type="button" onClick={onClick}>
+    <div className="buttonContainer">
+      <button type="button" className="Button" onClick={onClick}>
         Load more
       </button>
-    </>
+    </div>
   );
 };
 
 export default Button;
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

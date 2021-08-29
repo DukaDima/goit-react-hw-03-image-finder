@@ -3,17 +3,24 @@ import '../../components/styles.css';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Spinner from '../Loader/Loader';
 import Button from '../Button/Button';
+import PropTypes from 'prop-types';
 export default class ImageGallery extends Component {
+  static propTypes = {
+    photos: PropTypes.array,
+    loading: PropTypes.bool,
+    page: PropTypes.number,
+    error: PropTypes.any,
+  };
   state = {
-    photos: null,
+    photos: [],
     loading: false,
     page: 1,
     error: null,
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchPhoto !== this.props.searchPhoto) {
-      this.setState({ photos: '' });
       this.setState({ page: 1 });
+      this.setState({ photos: [] });
       this.setState({ loading: true });
       fetch(
         `https://pixabay.com/api/?q=${this.props.searchPhoto}&page=${this.state.page}&key=22333452-088c943be01bb3bdea991b2c2&image_type=photo&orientation=horizontal&per_page=12`,
@@ -23,7 +30,11 @@ export default class ImageGallery extends Component {
         .catch(error => this.setState({ error }))
         .finally(() => this.setState({ loading: false }));
     }
-    if (prevState.page !== this.state.page) {
+    if (
+      prevState.page !== this.state.page &&
+      this.state.page > 1 &&
+      prevProps.searchPhoto === this.props.searchPhoto
+    ) {
       this.setState({ loading: true });
       fetch(
         `https://pixabay.com/api/?q=${this.props.searchPhoto}&page=${this.state.page}&key=22333452-088c943be01bb3bdea991b2c2&image_type=photo&orientation=horizontal&per_page=12`,
@@ -33,14 +44,16 @@ export default class ImageGallery extends Component {
           this.setState({ photos: [...prevState.photos, ...photos.hits] }),
         )
         .catch(error => this.setState({ error }))
-        .finally(() => this.setState({ loading: false }));
+        .finally(() => {
+          this.setState({ loading: false });
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+          });
+        });
     }
   }
   handleAddPage = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
     this.setState(prevState => {
       return {
         page: prevState.page + 1,
@@ -70,7 +83,7 @@ export default class ImageGallery extends Component {
             ))}
           </ul>
         )}
-        {photos && <Button onClick={this.handleAddPage} />}
+        {photos.length > 0 && <Button onClick={this.handleAddPage} />}
       </div>
     );
   }

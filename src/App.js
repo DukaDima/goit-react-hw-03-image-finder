@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-// import Button from './components/Button/Button';
 import Modal from './components/Modal/Modal';
-import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
-
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 export default class App extends Component {
+  static propTypes = {
+    searchPhoto: PropTypes.string,
+    filter: PropTypes.string,
+    showModal: PropTypes.bool,
+    modalPhoto: PropTypes.string,
+  };
   state = {
     searchPhoto: '',
     showModal: false,
@@ -15,7 +19,6 @@ export default class App extends Component {
   };
   handleFormSubmit = searchPhoto => {
     this.setState({ searchPhoto });
-    console.log(searchPhoto);
   };
 
   toggleModal = () => {
@@ -25,8 +28,6 @@ export default class App extends Component {
   };
   handleClickPhoto = modalPhoto => {
     this.setState({ modalPhoto, showModal: true });
-
-    console.log(this.state.modalPhoto);
   };
 
   render() {
@@ -39,7 +40,7 @@ export default class App extends Component {
             largePhoto={this.state.modalPhoto}
           />
         )}
-        {/* <ToastContainer autoClose={3000} /> */}
+        <ToastContainer autoClose={3000} />
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery
           searchPhoto={searchPhoto}
